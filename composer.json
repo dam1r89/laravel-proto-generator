@@ -1,0 +1,20 @@
+{
+    "name": "dam1r89/proto-generator",
+    "description": "",
+    "authors": [
+        {
+            "name": "dam1r89",
+            "email": "damir89@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "dam1r89\\ProtoGenerator": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

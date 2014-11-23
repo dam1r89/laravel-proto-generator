@@ -19,9 +19,11 @@ class ProtoGeneratorServiceProvider extends ServiceProvider {
 	public function register()
 	{
 
+//        $this->app->bind('dam1r89\ProtoGenerator\ProtoCommand');
+
         $this->app['command.proto'] = $this->app->share(function()
         {
-            return new ProtoCommand();
+            return $this->app->make('dam1r89\ProtoGenerator\ProtoCommand');
         });
 
         $this->commands('command.proto');

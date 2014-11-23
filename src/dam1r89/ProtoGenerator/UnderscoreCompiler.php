@@ -7,12 +7,13 @@ namespace dam1r89\ProtoGenerator;
 class UnderscoreCompiler
 {
 
-    private $contextData;
+    protected $contextData = array();
 
-    function __construct($contextData)
+    public function setContextData($contextData)
     {
         $this->contextData = $contextData;
     }
+
 
 
     public function compile($string){

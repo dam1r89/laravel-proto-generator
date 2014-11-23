@@ -12,18 +12,20 @@ class ProtoCommand extends Command
     protected $name = 'proto';
     protected $description = 'Create model, views, controller, migration for a defined model. Example usage php `artisan proto user`';
     private $contextData;
+    private $compiler;
 
-    public function __construct()
+    public function __construct(UnderscoreCompiler $compiler)
     {
+        $this->compiler = $compiler;
         parent::__construct();
     }
 
     public function fire()
     {
+        $this->parseContextData($this->argument('model'));
 
-        $this->parseContextData();
-
-        $compiler = new UnderscoreCompiler($this->contextData);
+        $compiler = $this->compiler;
+        $compiler->setContextData($this->contextData);
 
         $scanner = new TemplateDirScanner($compiler);
 
@@ -58,14 +60,25 @@ class ProtoCommand extends Command
 
     }
 
-    private function parseContextData()
+    public function parseContextData($table)
     {
 
-        $item = $this->argument('model');
+        /**
+         *
+         * video_tags
+         * table: video_tags
+         * collection: videoTags
+         * controller: VideoTags
+         * item: videoTag
+         * model: VideoTag
+         */
 
-        $model = Ucfirst(camel_case($item));
-        $controller = str_plural($model);
-        $collection = lcfirst($controller);
+        $table = str_plural(strtolower($table));
+        $collection = camel_case($table);
+        $controller = Ucfirst($collection);
+
+        $item = str_singular($collection);
+        $model = Ucfirst($item);
         $migrationDate = $this->getDatePrefix();
 
         if ($this->option('fields')) {
@@ -74,7 +87,7 @@ class ProtoCommand extends Command
             $fields = array('name');
         }
 
-        $this->contextData = compact('item', 'model', 'controller', 'collection', 'migrationDate', 'fields');
+        return $this->contextData = compact('table', 'item', 'model', 'controller', 'collection', 'migrationDate', 'fields');
     }
 
     protected function getDatePrefix()

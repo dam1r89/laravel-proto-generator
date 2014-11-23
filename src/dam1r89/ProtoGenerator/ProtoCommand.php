@@ -11,7 +11,6 @@ class ProtoCommand extends Command
 
     protected $name = 'proto';
     protected $description = 'Create model, views, controller, migration for a defined model. Example usage php `artisan proto user`';
-    private $contextData;
     private $compiler;
 
     public function __construct(UnderscoreCompiler $compiler)
@@ -22,16 +21,18 @@ class ProtoCommand extends Command
 
     public function fire()
     {
-        $this->parseContextData($this->argument('model'));
+        $parser = new TranslatableContextDataDecorator(new ContextDataParser($this->argument('model'), $this->option('fields')));
+
 
         $compiler = $this->compiler;
-        $compiler->setContextData($this->contextData);
+        $compiler->setContextData($parser->getContextData());
 
         $scanner = new TemplateDirScanner($compiler);
 
-        // TODO: Switch templates
-        $source = __DIR__ . '/templates/standard';
-        $dest = base_path();
+        $source = __DIR__ . '/templates/'.$this->option('template');
+        $dest = base_path($this->option('output'));
+
+        $this->info("Creating on path $dest from source $source");
 
         $files = $scanner->scan($source, $dest);
 
@@ -60,41 +61,6 @@ class ProtoCommand extends Command
 
     }
 
-    public function parseContextData($table)
-    {
-
-        /**
-         *
-         * video_tags
-         * table: video_tags
-         * collection: videoTags
-         * controller: VideoTags
-         * item: videoTag
-         * model: VideoTag
-         */
-
-        $table = str_plural(strtolower($table));
-        $collection = camel_case($table);
-        $controller = Ucfirst($collection);
-
-        $item = str_singular($collection);
-        $model = Ucfirst($item);
-        $migrationDate = $this->getDatePrefix();
-
-        if ($this->option('fields')) {
-            $fields = explode(',', $this->option('fields'));
-        } else {
-            $fields = array('name');
-        }
-
-        return $this->contextData = compact('table', 'item', 'model', 'controller', 'collection', 'migrationDate', 'fields');
-    }
-
-    protected function getDatePrefix()
-    {
-        return date('Y_m_d_His');
-    }
-
     private function createDir($target)
     {
         $parts = pathinfo($target);
@@ -117,7 +83,9 @@ class ProtoCommand extends Command
     protected function getOptions()
     {
         return array(
-            array('fields', null, InputOption::VALUE_OPTIONAL, 'Model properties separated by comma (id field is included). Example --fields="name,category,test"', null),
+            array('fields', 'f', InputOption::VALUE_OPTIONAL, 'Model properties separated by comma (id field is included). Example --fields="name,category,test"', null),
+            array('template', 't', InputOption::VALUE_OPTIONAL, 'Template path under the templates folder of source file', 'standard'),
+            array('output', 'o', InputOption::VALUE_OPTIONAL, 'Output folder where file/folder structure will be generated, default is app', 'app')
         );
     }
 

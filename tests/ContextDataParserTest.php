@@ -63,4 +63,15 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals('videoTag', $data['item']);
         $this->assertEquals('VideoTag', $data['model']);
     }
+
+//    function testRemovingFiledFlags()
+//    {
+//
+//        $parser = new ContextDataParser('video_tag', 'vendor:tn1*, color:blw');
+//
+//        $data = $parser->getContextData();
+//
+//        $this->assertEquals('vendor', $data['fields'][0]);
+//        $this->assertEquals('color', $data['fields'][1]);
+//    }
 }

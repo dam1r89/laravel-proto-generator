@@ -40,4 +40,16 @@ class TranslatableContextDataDecoratorTest extends PHPUnit_Framework_TestCase{
 
     }
 
+    function testRemovingFlag()
+    {
+        $parser =  new ContextDataParser('question', 'orderNumber:t, title:tn1');
+
+        $translatableParser = new TranslatableContextDataDecorator($parser);
+
+        $data = $translatableParser->getContextData();
+
+        $this->assertEquals('orderNumber', $data['fields'][0]);
+        $this->assertEquals('title:n1', $data['fields'][1]);
+
+    }
 }

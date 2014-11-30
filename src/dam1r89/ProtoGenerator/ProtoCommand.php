@@ -21,8 +21,10 @@ class ProtoCommand extends Command
 
     public function fire()
     {
-        $parser = new TranslatableContextDataDecorator(new ContextDataParser($this->argument('model'), $this->option('fields')));
-
+        $parser =
+            new RelationsContextDataDecorator(
+            new TranslatableContextDataDecorator(
+            new ContextDataParser($this->argument('model'), $this->option('fields') )));
 
         $compiler = $this->compiler;
         $compiler->setContextData($parser->getContextData());

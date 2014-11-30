@@ -9,15 +9,15 @@
 namespace dam1r89\ProtoGenerator;
 
 
-class TranslatableContextDataDecorator implements ContextDataParserInterface
+class RelationsContextDataDecorator implements ContextDataParserInterface
 {
 
 
     private $parser;
 
-    const TRANSLATABLES = 'translatables';
+    const BELONGS_TO = 'belongsTos';
 
-    const NON_TRANSLATABLES = 'nonTranslatables';
+    const HAS_MANY = 'hasMany';
 
     function __construct(ContextDataParserInterface $parser)
     {
@@ -28,22 +28,28 @@ class TranslatableContextDataDecorator implements ContextDataParserInterface
     {
         $data = $this->parser->getContextData();
 
-        $data[self::TRANSLATABLES] = array();
-        $data[self::NON_TRANSLATABLES] = array();
+        $data[self::BELONGS_TO] = array();
+        $data[self::HAS_MANY] = array();
         foreach ($data['fields'] as $key => $field) {
-            $parts = explode(':', $field);
-            if (isset($parts[1]) && $this->hasFlag('t', $field)) {
-                $data[self::TRANSLATABLES][] = $parts[0];
-                $data['fields'][$key] = $this->pullFlag('t',$field);
+
+            if ($this->hasFlag('n', $field)){
+               $data['fields'][$key] = $this->pullFlag('n', $field);
+               $data[self::HAS_MANY][] = $this->pullField($field);
             }
-            else{
-                $data[self::NON_TRANSLATABLES][] = $field;
+
+            if ($this->hasFlag('1', $field)){
+                $data['fields'][$key] = $this->pullFlag('1', $field);
+                $data[self::BELONGS_TO][] = camel_case(str_replace('_id','',$this->pullField($field)));
             }
         }
 
 
         return $data;
 
+    }
+
+    private function pullField($field){
+        return explode(':', $field)[0];
     }
 
     public function hasFlag($flag, $field){
@@ -69,6 +75,5 @@ class TranslatableContextDataDecorator implements ContextDataParserInterface
         return $field;
 
     }
-
 
 }

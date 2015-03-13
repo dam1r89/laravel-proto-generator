@@ -23,9 +23,9 @@ class TemplateProcessor{
         foreach ($context as $key => $value) {
             $$key = $value;
         }
-        file_put_contents('__template.tmp', $data);
+        file_put_contents(storage_path('__template.tmp'), $data);
         ob_start();
-        require '__template.tmp';
+        require storage_path('__template.tmp');
         $data = ob_get_clean();
 
         return $this->unEscape($data, ['<?php', '?>']);

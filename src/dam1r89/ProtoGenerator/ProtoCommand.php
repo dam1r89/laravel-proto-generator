@@ -26,6 +26,8 @@ class ProtoCommand extends Command
             new TranslatableContextDataDecorator(
             new ContextDataParser($this->argument('model'), $this->option('fields') )));
 
+
+
         $compiler = $this->compiler;
         $compiler->setContextData($parser->getContextData());
 
@@ -38,6 +40,10 @@ class ProtoCommand extends Command
 
         $files = $scanner->scan($source, $dest);
 
+
+        $tp = new TemplateProcessor();
+
+
         foreach ($files as $file) {
 
 
@@ -45,9 +51,9 @@ class ProtoCommand extends Command
 
             $source = file_get_contents($file['src']);
 
-            if (!file_exists($file['dest']) || file_exists($file['dest']) && $this->confirm("File {$file['dest']} exists, to you want to overwrite?")) {
+            if (!file_exists($file['dest']) || ( $this->option('override')  ||  file_exists($file['dest']) && $this->confirm("File {$file['dest']} exists, to you want to overwrite?") ) ) {
 
-                file_put_contents($file['dest'], $compiler->compile($source));
+                file_put_contents($file['dest'], $tp->procces($source, $parser->getContextData()));
                 $this->info("Generating {$file['dest']}");
 
             }
@@ -55,8 +61,6 @@ class ProtoCommand extends Command
         }
 
         $info = $compiler->compile("add to the routes:\n\tRoute::model('__collection__', '__model__');\n\tRoute::resource('__collection__', '__controller__Controller');\n\n");
-
-        $this->call('dump-autoload');
 
         $this->info($info);
 
@@ -87,7 +91,8 @@ class ProtoCommand extends Command
         return array(
             array('fields', 'f', InputOption::VALUE_OPTIONAL, 'Model properties separated by comma (id field is included). Example --fields="name,category,test"', null),
             array('template', 't', InputOption::VALUE_OPTIONAL, 'Template path under the templates folder of source file', 'standard'),
-            array('output', 'o', InputOption::VALUE_OPTIONAL, 'Output folder where file/folder structure will be generated, default is app', 'app')
+            array('output', 'o', InputOption::VALUE_OPTIONAL, 'Output folder where file/folder structure will be generated, default is app', ''),
+            array('override', 'r', InputOption::VALUE_NONE, 'Automatically override all')
         );
     }
 

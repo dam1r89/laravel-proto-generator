@@ -1,13 +1,12 @@
 <?php
 
-class __controller__Controller extends BaseController {
-
+class __$controller__Controller extends BaseController {
     private function validate($data){
 
         // TODO: Enter validation rules
         return Validator::make($data, array(
-            __fields__
-            '__field__' => 'required',__stop__
+            __!foreach($fields as $field):__
+            '__$field__' => '__$field->get('validation')__',__!endforeach;__
         ));
     }
 
@@ -15,43 +14,43 @@ class __controller__Controller extends BaseController {
     public function index()
     {
 
-        $collection = __model__::all();
-        return View::make('__collection__.index', compact('collection'));
+        $collection = __$model__::all();
+        return View::make('__$collection__.index', compact('collection'));
     }
 
     public function create()
     {
 
-        return $this->renderView(new __model__(), true);
+        return $this->renderView(new __$model__(), true);
     }
 
-    public function edit($__item__)
+    public function edit($__$item__)
     {
 
-        return $this->renderView($__item__);
+        return $this->renderView($__$item__);
     }
 
-    private function renderView($__item__, $new = false){
+    private function renderView($__$item__, $new = false){
 
-        $route = '__collection__.'.($new ? 'store' : 'update');
+        $route = '__$collection__.'.($new ? 'store' : 'update');
         $method = $new ? 'post' : 'put';
 
-        return View::make('__collection__.edit', compact('route', 'method', '__item__'));
+        return View::make('__$collection__.edit', compact('route', 'method', '__$item__'));
     }
 
     public function store()
     {
 
-        return $this->fillModel(new __model__());
+        return $this->fillModel(new __$model__());
     }
 
-    public function update($__item__)
+    public function update($__$item__)
     {
 
-        return $this->fillModel($__item__);
+        return $this->fillModel($__$item__);
     }
 
-    private function fillModel($__item__){
+    private function fillModel($__$item__){
 
         $input = Input::all();
 
@@ -63,21 +62,21 @@ class __controller__Controller extends BaseController {
                 ->withInput();
         }
 
-        $__item__->fill($input);
-        $__item__->save();
+        $__$item__->fill($input);
+        $__$item__->save();
 
-        return Redirect::route('__collection__.index');
+        return Redirect::route('__$collection__.index');
     }
 
-    public function show($__item__)
+    public function show($__$item__)
     {
-        return implode($__item__->getAttributes(), ', ');
+        return implode($__$item__->getAttributes(), ', ');
     }
 
-    public function destroy($__item__)
+    public function destroy($__$item__)
     {
-        $__item__->delete();
-        return Redirect::route('__collection__.index');
+        $__$item__->delete();
+        return Redirect::route('__$collection__.index');
 
     }
 

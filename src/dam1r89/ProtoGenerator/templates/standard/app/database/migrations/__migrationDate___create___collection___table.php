@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Create__controller__Table extends Migration {
+class Create__$controller__Table extends Migration {
 
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class Create__controller__Table extends Migration {
      */
     public function up()
     {
-        Schema::create('__collection__', function($table){
+        Schema::create('__$collection__', function($table){
             $table->increments('id');
-            __fields__
-            $table->string('__field__');__stop__
+            __!foreach($fields as $field):__
+            $table->string('__$field__');__!endforeach;__
             $table->timestamps();
         });
     }
@@ -28,7 +28,7 @@ class Create__controller__Table extends Migration {
     public function down()
     {
 
-        Schema::dropIfExists('__collection__');
+        Schema::dropIfExists('__$collection__');
 
     }
 

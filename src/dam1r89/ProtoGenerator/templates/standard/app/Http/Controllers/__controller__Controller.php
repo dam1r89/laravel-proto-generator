@@ -1,15 +1,6 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-class __$controller__Controller extends BaseController {
-    private function validate($data){
-
-        // TODO: Enter validation rules
-        return Validator::make($data, array(
-            __!foreach($fields as $field):__
-            '__$field__' => '__$field->get('validation')__',__!endforeach;__
-        ));
-    }
-
+class __$controller__Controller extends Controller {
 
     public function index()
     {

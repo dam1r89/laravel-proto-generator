@@ -60,10 +60,9 @@ class ProtoCommand extends Command
 
         }
 
-        $info = $compiler->compile("add to the routes:\n\tRoute::model('__collection__', '__model__');\n\tRoute::resource('__collection__', '__controller__Controller');\n\n");
+        $info = $compiler->compile("add to the routes:\n\tRoute::model('__collection__', 'App\Models\__model__');\n\tRoute::resource('__collection__', '__controller__Controller');\n\n");
 
         $this->info($info);
-
 
     }
 

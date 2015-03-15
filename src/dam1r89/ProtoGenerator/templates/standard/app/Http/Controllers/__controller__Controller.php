@@ -1,74 +1,110 @@
 <?php namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use App\Http\Requests\__$model__FormRequest;
+use App\Models\__$model__;
+use Illuminate\Http\Request;
+use Redirect;
+use Session;
+
 class __$controller__Controller extends Controller {
 
+    public $__$item__;
+
+    /**
+     * @param __$model.' ' __ $__$item__ ;
+     */
+    public function __'_'.'_'__construct( __$model.' ' __ $__$item__ )
+    {
+        $this->__$item__ = $__$item__;
+    }
+
+    /**
+     * @return \Illuminate\View\View ;
+     */
     public function index()
     {
-
-        $collection = __$model__::all();
-        return View::make('__$collection__.index', compact('collection'));
+        $__$collection.' '__ = $this->__$item__->all();
+        return view('__$collection__.index',compact('__$collection__'));
     }
 
+    /**
+     * @return \Illuminate\View\View ;
+     */
     public function create()
     {
-
-        return $this->renderView(new __$model__(), true);
+        $__$item.' '__ = $this->__$item__;
+        return view('__$collection__.create',compact('__$item__'));
     }
 
-    public function edit($__$item__)
+    /**
+     * @param __$model__FormRequest $request ; 
+     * @return \Illuminate\Http\RedirectResponse ;
+     */
+    public function store(__$model__FormRequest $request )
     {
+        $__$item.' '__ = $this->__$item__->create($request->all());
+        __!foreach($fields as $field):__
+                __!if($field->has('relation')) : __ 
+                    __!if($field->get("relation")["type"] == 'belongsToMany'):__
+                            $__$item__->__$field__()->sync($request->all()['__$field__']);
+                    __!endif;__
+                __!endif;__
+        __!endforeach;__
 
-        return $this->renderView($__$item__);
-    }
-
-    private function renderView($__$item__, $new = false){
-
-        $route = '__$collection__.'.($new ? 'store' : 'update');
-        $method = $new ? 'post' : 'put';
-
-        return View::make('__$collection__.edit', compact('route', 'method', '__$item__'));
-    }
-
-    public function store()
-    {
-
-        return $this->fillModel(new __$model__());
-    }
-
-    public function update($__$item__)
-    {
-
-        return $this->fillModel($__$item__);
-    }
-
-    private function fillModel($__$item__){
-
-        $input = Input::all();
-
-        $validator = $this->validate($input);
-        if ($validator->fails()){
-
-            return Redirect::back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $__$item__->fill($input);
-        $__$item__->save();
-
+        Session::flash('success','You successfully added  __$model__');
         return Redirect::route('__$collection__.index');
     }
 
+    /**
+     * @param $__$item__ ;
+     * @return \Illuminate\View\View ;
+     */
     public function show($__$item__)
     {
-        return implode($__$item__->getAttributes(), ', ');
+        return view('__$collection__.show',compact('__$item__'));
     }
 
+    /**
+     * @param $__$item__ ;
+     * @return \Illuminate\View\View ;
+     */
+    public function edit($__$item__)
+    {
+        return view('__$collection__.edit',compact('__$item__'));
+    }
+
+    /**
+     * @param __$model__FormRequest $request ;
+     * @param  $__$item__ ;
+     * @return \Illuminate\Http\RedirectResponse ;
+     */
+    public function update(__$model__FormRequest $request, $__$item__)
+    {
+        $__$item__->update($request->all());
+        __!foreach($fields as $field):__
+            __!if($field->has('relation')) : __ 
+                __!if($field->get("relation")["type"] == 'belongsToMany'):__
+                        $__$item__->__$field__()->sync($request->all()['__$field__']);
+                __!endif;__
+            __!endif;__
+        __!endforeach;__
+        Session::flash('success','You successfully edit __$model__');
+        return Redirect::route('__$collection__.index');
+    }
+
+    /**
+     * @param $__$item__ ;
+     * @return \Illuminate\Http\RedirectResponse ;
+     */
     public function destroy($__$item__)
     {
         $__$item__->delete();
+        Session::flash('success','You successfully delete __$model__');
         return Redirect::route('__$collection__.index');
-
     }
+
 
 }

@@ -20,7 +20,7 @@ add to `app/config/app.php`
 
 ##Flags
 
-*-r* replace files withouth asking
-*-t* template folder - default `standard`
-*-f* fields
-*-o* output folder - default base
+*-r* replace files withouth asking  
+*-t* template folder - default `standard`  
+*-f* fields  
+*-o* output folder - default base  

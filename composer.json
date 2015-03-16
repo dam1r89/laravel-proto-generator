@@ -1,12 +1,14 @@
 {
     "name": "dam1r89/proto-generator",
-    "description": "",
-    "authors": [
-        {
-            "name": "dam1r89",
-            "email": "damir89@gmail.com"
-        }
-    ],
+    "description": "Laravel 5 prototyping tool. Creates files based on the templates. It comes with template for views, model, migration and controllers.",
+    "keywords": ["laravel", "prototyping", "scaffold", "generator", "command"],
+    "authors": [{
+        "name": "Damir Miladinov",
+        "email": "damir89@gmail.com"
+    }, {
+        "name": "Ivan Mijatovic",
+        "email": "ivanmijatovic89@gmail.com"
+    }],
     "require": {
         "php": ">=5.4.0",
         "illuminate/support": "5.0.*"

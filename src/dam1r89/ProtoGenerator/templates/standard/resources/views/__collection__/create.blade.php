@@ -6,7 +6,7 @@
              {!! link_to_route('__$collection__.index', 'All __$collection__' , [] , array('class' => 'btn btn-info','style'=>'color:white')) !!}
         </p>
 
-    {!!Form::model($__$item__,[ 'action' => '__! echo ucfirst($collection);__Controller@store' ] )!!}
+    {!!Form::model($__$item__,[ 'route' => '__$collection__.store' ] )!!}
 
         __!foreach($fields as $field):__
             __!if($field->has('relation')) : __ 

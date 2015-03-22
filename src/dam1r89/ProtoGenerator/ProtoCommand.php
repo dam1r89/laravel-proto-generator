@@ -3,6 +3,7 @@
 namespace dam1r89\ProtoGenerator;
 
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Composer;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -19,17 +20,20 @@ class ProtoCommand extends Command
         parent::__construct();
     }
 
+    private function getContextData(){
+        return json_decode($this->option('data'), true);
+    }
+
     public function fire()
     {
-        $parser =
-            new RelationsContextDataDecorator(
-            new TranslatableContextDataDecorator(
-            new ContextDataParser($this->argument('model'), $this->option('fields') )));
+        $parser = new ContextDataParser($this->argument('model'), $this->option('fields'));
 
+        $additional['namespace'] = with(new ComposerParser(base_path('composer.json')))->getNamespace('App\\');
 
+        $context = array_merge($parser->getContextData(), $additional, $this->getContextData());
 
         $compiler = $this->compiler;
-        $compiler->setContextData($parser->getContextData());
+        $compiler->setContextData($context);
 
         $scanner = new TemplateDirScanner($compiler);
 
@@ -53,16 +57,14 @@ class ProtoCommand extends Command
 
             if (!file_exists($file['dest']) || ( $this->option('override')  ||  file_exists($file['dest']) && $this->confirm("File {$file['dest']} exists, to you want to overwrite?") ) ) {
 
-                file_put_contents($file['dest'], $tp->procces($source, $parser->getContextData()));
+                file_put_contents($file['dest'], $tp->procces($source, $context));
                 $this->info("Generating {$file['dest']}");
 
             }
 
         }
 
-        $info = $compiler->compile("add to the routes:\n\tRoute::model('__collection__', 'App\Models\__model__');\n\tRoute::resource('__collection__', '__controller__Controller');\n\n");
-
-        $this->info($info);
+        $this->info('done');
 
     }
 
@@ -89,6 +91,7 @@ class ProtoCommand extends Command
     {
         return array(
             array('fields', 'f', InputOption::VALUE_OPTIONAL, 'Model properties separated by comma (id field is included). Example --fields="name,category,test"', null),
+            array('data', 'd', InputOption::VALUE_OPTIONAL, 'Additional data', '{}'),
             array('template', 't', InputOption::VALUE_OPTIONAL, 'Template path under the templates folder of source file', 'standard'),
             array('output', 'o', InputOption::VALUE_OPTIONAL, 'Output folder where file/folder structure will be generated, default is app', ''),
             array('override', 'r', InputOption::VALUE_NONE, 'Automatically override all')

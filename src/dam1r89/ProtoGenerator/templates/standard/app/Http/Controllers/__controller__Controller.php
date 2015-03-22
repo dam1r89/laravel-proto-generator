@@ -1,10 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php namespace __$namespace__\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Http\Requests\__$model__FormRequest;
-use App\Models\__$model__;
+use __$namespace__\Http\Requests\__$model__FormRequest;
+use __$namespace__\Models\__$model__;
 use Illuminate\Http\Request;
 use Redirect;
 use Session;

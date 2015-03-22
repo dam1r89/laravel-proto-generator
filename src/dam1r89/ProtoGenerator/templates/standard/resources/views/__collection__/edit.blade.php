@@ -8,7 +8,7 @@
         </p>
 
 
-    {!!Form::model($__$item__,[ 'action' => ['__ ucfirst($collection)__Controller@update' ,$__$item__->id ] ,'method' => 'PATCH' ]  )!!}
+    {!!Form::model($__$item__,[ 'route' => ['__$collection__.update' ,$__$item__->id ] ,'method' => 'PATCH' ]  )!!}
 
         __!foreach($fields as $field):__
          __!if($field->has('relation')) : __ 

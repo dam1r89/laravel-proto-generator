@@ -70,8 +70,7 @@ class ContextDataParser implements ContextDataParserInterface{
         if ($this->fieldsString) {
             $jsonFields = json_decode($this->fieldsString, true);
             if ($jsonFields === null){
-                echo "Bad input arguments\n";
-                die();
+                $jsonFields = [];
             }
             foreach ($jsonFields as $name => $field) {
                 $fields[] = new Field($name, $field);

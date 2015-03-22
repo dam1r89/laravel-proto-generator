@@ -1,4 +1,4 @@
-<?php namespace App\Models;
+<?php namespace __$namespace__\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

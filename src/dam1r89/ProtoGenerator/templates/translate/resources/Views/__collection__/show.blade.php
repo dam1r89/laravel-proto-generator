@@ -5,7 +5,9 @@
         <p>
             {!! link_to_route('__$collection__.index', 'All __$collection__' , [] , array('class' => 'btn btn-info','style'=>'color:white')) !!}
         </p>
-
+    <div class="tab-content">
+        @foreach( $locales as $lang)
+            <div class=" tab-pane fade  @if ($locale == $lang) in active @endif" id="content-{{ $lang }}">
         <table class="table  table-hover">
             <thead>
                 <tr>
@@ -34,7 +36,7 @@
                                      </td>
                              __!endif__
                          __!else: __
-                                    <td>{{$__$item__->__$field__}}</td>
+                                 <td>{{$__$item__->translate($lang)->__$field__}}</td>
                          __!endif;__
                      __!endforeach;__
                       <td>{!! link_to_route('__$collection__.edit', 'Edit', array($__$item__->id), array('class' => 'btn btn-info','style'=>'color:white')) !!}</td>
@@ -47,5 +49,8 @@
                 </tr>
             </tbody>
         </table>
+            </div>
+        @endforeach
+    </div>
 
 @stop

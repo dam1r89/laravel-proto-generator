@@ -27,7 +27,7 @@ class __$controller__Controller extends Controller {
     public function index()
     {
         $__$collection.' '__ = $this->__$item__->all();
-        return view('__$collection__.index',compact('__$collection__'));
+        return view('__$item__::__$collection__.index',compact('__$collection__'));
     }
 
     /**
@@ -36,7 +36,7 @@ class __$controller__Controller extends Controller {
     public function create()
     {
         $__$item.' '__ = $this->__$item__;
-        return view('__$collection__.create',compact('__$item__'));
+        return view('__$item__::__$collection__.create',compact('__$item__'));
     }
 
     /**
@@ -64,7 +64,7 @@ class __$controller__Controller extends Controller {
      */
     public function show($__$item__)
     {
-        return view('__$collection__.show',compact('__$item__'));
+        return view('__$item__::__$collection__.show',compact('__$item__'));
     }
 
     /**
@@ -73,7 +73,7 @@ class __$controller__Controller extends Controller {
      */
     public function edit($__$item__)
     {
-        return view('__$collection__.edit',compact('__$item__'));
+        return view('__$item__::__$collection__.edit',compact('__$item__'));
     }
 
     /**

@@ -4,6 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class __$model.' '__  extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
+    public $translatedAttributes = [   __!foreach($fields as $field):__  __!if($field->has('translation')):__ '__$field__' , __! endif;__   __!endforeach__];
     public $fillable = [ __! $fields_counter =1;__  __!foreach($fields as $field):__  __!if($field->get("relation")["type"] != 'belongsToMany'):__ '__$field__' __!if(count($fields)  != $fields_counter):__ , __! endif;__  __! endif;__  __!$fields_counter++__  __!endforeach__];
 
     	__!foreach($fields as $field):__
@@ -26,4 +29,11 @@ class __$model.' '__  extends Model
 				
                
         __!endforeach;__
+}
+
+class __$model__Translation  extends Model{
+
+    public $timestamps = false;
+    public $fillable   = [   __!foreach($fields as $field):__  __!if($field->has('translation')):__ '__$field__' , __! endif;__   __!endforeach__];
+
 }

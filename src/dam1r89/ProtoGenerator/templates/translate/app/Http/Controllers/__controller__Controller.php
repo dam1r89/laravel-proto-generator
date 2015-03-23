@@ -18,6 +18,7 @@ class __$controller__Controller extends Controller {
      */
     public function __'_'.'_'__construct( __$model.' ' __ $__$item__ )
     {
+        include(base_path('app/Http/translate_locales.php'));
         $this->__$item__ = $__$item__;
     }
 

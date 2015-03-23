@@ -6,7 +6,13 @@ composer.json
 
 add to `app/config/app.php`
 
-        'dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider'
+        'dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider',
+        'Illuminate\Html\HtmlServiceProvider',
+
+
+
+        'Form' => 'Illuminate\Html\FormFacade',
+        'HTML' => 'Illuminate\Html\HtmlFacade',
 
 ##Example
 

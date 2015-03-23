@@ -12,73 +12,54 @@ class ProtoCommand extends Command
 
     protected $name = 'proto';
     protected $description = 'Create model, views, controller, migration for a defined model. Example usage php `artisan proto user`';
-    private $compiler;
 
-    public function __construct(UnderscoreCompiler $compiler)
+    private function getContextData()
     {
-        $this->compiler = $compiler;
-        parent::__construct();
-    }
-
-    private function getContextData(){
         return json_decode($this->option('data'), true);
     }
 
     public function fire()
     {
-        $parser = new ContextDataParser($this->argument('model'), $this->option('fields'));
+        $contextData = $this->getContextData();
 
-        $additional['namespace'] = with(new ComposerParser(base_path('composer.json')))->getNamespace('App\\');
-
-        $context = array_merge($parser->getContextData(), $additional, $this->getContextData());
-
-        $compiler = $this->compiler;
-        $compiler->setContextData($context);
-
-        $scanner = new TemplateDirScanner($compiler);
-
-        $source = __DIR__ . '/templates/'.$this->option('template');
+        $source = __DIR__ . '/templates/' . $this->option('template');
         $dest = base_path($this->option('output'));
 
         $this->info("Creating on path $dest from source $source");
 
-        $files = $scanner->scan($source, $dest);
 
+        $parser = new ContextDataParser($this->argument('model'), json_decode($this->option('fields'), true));
 
-        $tp = new TemplateProcessor();
+        $additional['namespace'] = with(new ComposerParser(base_path('composer.json')))->getNamespace('App\\');
 
+        $context = array_merge($parser->getContextData(), $additional, $contextData);
 
-        foreach ($files as $file) {
+        $proto = Proto::create($source, $dest, $context);
 
-
-            $this->createDir($file['dest']);
-
-            $source = file_get_contents($file['src']);
-
-            if (!file_exists($file['dest']) || ( $this->option('override')  ||  file_exists($file['dest']) && $this->confirm("File {$file['dest']} exists, to you want to overwrite?") ) ) {
-
-                file_put_contents($file['dest'], $tp->procces($source, $context));
-                $this->info("Generating {$file['dest']}");
-
-            }
-
+        $existing = [];
+        foreach ($proto->getFiles() as $file) {
+           if (file_exists($file->dest)){
+               $existing[] = substr($file->dest, strlen(base_path()) + 1);
+           }
         }
 
-        $this->info('done');
+        if (count($existing) === 0){
+            $proto->generate();
+            $this->info('Success');
+        }
+        else{
+            $this->error('Files exists');
+            $this->info(implode("\n", $existing));
+            if ($this->confirm("Do you want to overwrite these files?")){
+                $proto->generate(true);
+            };
+        }
+
+
 
     }
 
-    private function createDir($target)
-    {
-        $parts = pathinfo($target);
 
-        $dir = $parts['dirname'];
-
-        if (!file_exists($dir)) {
-            return mkdir($dir, 0777, true);
-        }
-        return false;
-    }
 
     protected function getArguments()
     {
@@ -90,7 +71,7 @@ class ProtoCommand extends Command
     protected function getOptions()
     {
         return array(
-            array('fields', 'f', InputOption::VALUE_OPTIONAL, 'Model properties separated by comma (id field is included). Example --fields="name,category,test"', null),
+            array('fields', 'f', InputOption::VALUE_OPTIONAL, 'Model properties separated by comma (id field is included). Example --fields="name,category,test"', '[]'),
             array('data', 'd', InputOption::VALUE_OPTIONAL, 'Additional data', '{}'),
             array('template', 't', InputOption::VALUE_OPTIONAL, 'Template path under the templates folder of source file', 'standard'),
             array('output', 'o', InputOption::VALUE_OPTIONAL, 'Output folder where file/folder structure will be generated, default is app', ''),

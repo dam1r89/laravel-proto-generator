@@ -21,8 +21,7 @@ class CompilerTest extends PHPUnit_Framework_TestCase{
             'key' => 'value'
         );
 
-        $protoCmd = new UnderscoreCompiler();
-        $protoCmd->setContextData($data);
+        $protoCmd = new UnderscoreCompiler($data);
         $res = $protoCmd->compile('__key__', $data);
 
         $this->assertEquals('value', $res);
@@ -34,8 +33,7 @@ class CompilerTest extends PHPUnit_Framework_TestCase{
             'names' => ['hello', 'value']
         );
 
-        $protoCmd = new UnderscoreCompiler();
-        $protoCmd->setContextData($data);
+        $protoCmd = new UnderscoreCompiler($data);
         $res = $protoCmd->compile("__names__\n(__name__)\n__stop__");
 
         $this->assertContains('(hello)', $res);
@@ -49,8 +47,7 @@ class CompilerTest extends PHPUnit_Framework_TestCase{
             'fields' => ['one', 'two']
         );
 
-        $protoCmd = new UnderscoreCompiler();
-        $protoCmd->setContextData($data);
+        $protoCmd = new UnderscoreCompiler($data);
         $res = $protoCmd->compile("__names__\n(__name__)\n__stop__ __fields__<__field__>__stop__ ");
 
         $this->assertContains('(hello)', $res);

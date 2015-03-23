@@ -11,8 +11,17 @@ namespace dam1r89\ProtoGenerator;
 
 class TemplateProcessor{
 
-    public function procces($data, $context)
+    private $context;
+
+    function __construct($context)
     {
+        $this->context = $context;
+    }
+
+
+    public function procces($data)
+    {
+
 
         $data = $this->escape($data, ['<?php', '?>']);
 
@@ -20,7 +29,7 @@ class TemplateProcessor{
         $data = preg_replace('/__\s*((.|\n|\r)*?)\s*__\h*\n?\h*/', '<?php echo $1; ?>', $data);
 
 
-        foreach ($context as $key => $value) {
+        foreach ($this->context as $key => $value) {
             $$key = $value;
         }
         file_put_contents(storage_path('__template.tmp'), $data);

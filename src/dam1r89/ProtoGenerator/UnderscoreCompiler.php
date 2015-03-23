@@ -9,11 +9,10 @@ class UnderscoreCompiler
 
     protected $contextData = array();
 
-    public function setContextData($contextData)
+    function __construct($contextData)
     {
         $this->contextData = $contextData;
     }
-
 
 
     public function compile($string){

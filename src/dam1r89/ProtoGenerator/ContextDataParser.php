@@ -47,12 +47,12 @@ class Field{
 class ContextDataParser implements ContextDataParserInterface{
 
 
-    private $item, $fieldsString;
+    private $item, $fields;
 
-    function __construct($item, $fields)
+    function __construct($item, array $fields = [])
     {
         $this->item = $item;
-        $this->fieldsString = $fields;
+        $this->fields = $fields;
     }
 
     public function getContextData(){
@@ -67,16 +67,9 @@ class ContextDataParser implements ContextDataParserInterface{
         $migrationDate = $this->getDatePrefix();
 
         $fields = [];
-        if ($this->fieldsString) {
-            $jsonFields = json_decode($this->fieldsString, true);
-            if ($jsonFields === null){
-                $jsonFields = [];
-            }
-            foreach ($jsonFields as $name => $field) {
-                $fields[] = new Field($name, $field);
-            }
 
-
+        foreach ($this->fields as $name => $field) {
+            $fields[] = new Field($name, $field);
         }
 
         return compact('table', 'item', 'singleItem', 'model', 'controller', 'collection', 'migrationDate', 'fields');

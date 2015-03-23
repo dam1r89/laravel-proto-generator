@@ -13,7 +13,7 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
 
     public function testParsingOneWordItem()
     {
-        $parser = new ContextDataParser('car', 'vendor, color');
+        $parser = new ContextDataParser('car', []);
 
         $data = $parser->getContextData();
         /**
@@ -52,7 +52,7 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
      */
     private function parseItem($itemName)
     {
-        $parser = new ContextDataParser($itemName, 'vendor, color');
+        $parser = new ContextDataParser($itemName, []);
 
         $data = $parser->getContextData();
 
@@ -64,14 +64,4 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals('VideoTag', $data['model']);
     }
 
-//    function testRemovingFiledFlags()
-//    {
-//
-//        $parser = new ContextDataParser('video_tag', 'vendor:tn1*, color:blw');
-//
-//        $data = $parser->getContextData();
-//
-//        $this->assertEquals('vendor', $data['fields'][0]);
-//        $this->assertEquals('color', $data['fields'][1]);
-//    }
 }

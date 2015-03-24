@@ -63,6 +63,7 @@ class ContextDataParser implements ContextDataParserInterface{
         $controller = Ucfirst($collection);
 
         $item = str_singular($collection);
+        $itemLower = strtolower($item);
         $model = Ucfirst($item);
         $migrationDate = $this->getDatePrefix();
 
@@ -72,7 +73,7 @@ class ContextDataParser implements ContextDataParserInterface{
             $fields[] = new Field($name, $field);
         }
 
-        return compact('table', 'item', 'singleItem', 'model', 'controller', 'collection', 'migrationDate', 'fields');
+        return compact('table', 'item', 'itemLower', 'singleItem', 'model', 'controller', 'collection', 'migrationDate', 'fields');
     }
 
     protected function getDatePrefix()

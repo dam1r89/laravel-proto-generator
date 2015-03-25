@@ -71,12 +71,6 @@ class Create__$controller__Table extends Migration {
      */
     public function down()
     {
-        __!if(isset($counter_translation )):__
-            Schema::dropIfExists('__$item___translations');
-        __!endif;__
-
-        Schema::dropIfExists('__$table__');
-
         __!foreach($fields as $field):__
                  __!if($field->get("relation")["type"] != 'belongsToMany'):__
                     __!if($field->has('translation')):__
@@ -85,9 +79,12 @@ class Create__$controller__Table extends Migration {
                  __!endif;__
 
         __!endforeach;__
+        __!if(isset($counter_translation )):__
+            Schema::dropIfExists('__$item___translations');
+        __!endif;__
 
 
-
+    
         __!foreach($fields as $field):__
             __!if($field->has('relation')) : __ 
                 __!if($field->get("relation")["type"] == 'belongsToMany'):__
@@ -97,6 +94,8 @@ class Create__$controller__Table extends Migration {
                 __!endif;__
             __!endif;__
         __!endforeach;__
+
+        Schema::dropIfExists('__$table__');
        
 
     }

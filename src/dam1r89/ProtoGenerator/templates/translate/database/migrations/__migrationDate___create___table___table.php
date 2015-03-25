@@ -84,7 +84,7 @@ class Create__$controller__Table extends Migration {
         __!endif;__
 
 
-    
+
         __!foreach($fields as $field):__
             __!if($field->has('relation')) : __ 
                 __!if($field->get("relation")["type"] == 'belongsToMany'):__

@@ -32,6 +32,7 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals('cars', $data['collection']);
         $this->assertEquals('Cars', $data['controller']);
         $this->assertEquals('car', $data['item']);
+        $this->assertEquals('car', $data['itemLower']);
         $this->assertEquals('Car', $data['model']);
 
     }
@@ -61,6 +62,7 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
         $this->assertEquals('videoTags', $data['collection']);
         $this->assertEquals('VideoTags', $data['controller']);
         $this->assertEquals('videoTag', $data['item']);
+        $this->assertEquals('videotag', $data['itemLower']);
         $this->assertEquals('VideoTag', $data['model']);
     }
 

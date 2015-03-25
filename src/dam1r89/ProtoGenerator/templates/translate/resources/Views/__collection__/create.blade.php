@@ -31,13 +31,13 @@
                      __!if($field->get("relation")["type"] == 'hasOne') : __ 
                         <div class="form-group {{ ($errors->has('__$field__')) ? 'has-error' : '' }}">
                                 {!! Form::label('__$field__','__ ucfirst($field->get("relation")["name"])__:') !!}
-                                {!! Form::select('__$field__', __$field->get("relation")["class"]__::lists('__$field->get("relation")["field"]__','id') ,null, array('class' => 'form-control', 'placeholder' => '__ ucfirst($field) __')) !!}
+                                {!! Form::select('__$field__', __$field->get("relation")["class"]__::all()->lists('__$field->get("relation")["field"]__','id') ,null, array('class' => 'form-control', 'placeholder' => '__ ucfirst($field) __')) !!}
                                 {!! ($errors->has('__$field__') ? '<p>'.$errors->first('__$field__').'</p>' : '') !!}
                         </div>
                      __!else:__
                     <div class="form-group {{ ($errors->has('__$field__')) ? 'has-error' : '' }}">
                         {!! Form::label('__$field__','__ ucfirst($field->get("relation")["name"])__:') !!}
-                        {!! Form::select('__$field__[]', __$field->get("relation")["class"]__::lists('__$field->get("relation")["field"]__','id'),null, array('class' => 'form-control', 'placeholder' => '__ ucfirst($field) __','multiple')) !!}
+                        {!! Form::select('__$field__[]', __$field->get("relation")["class"]__::all()->lists('__$field->get("relation")["field"]__','id'),null, array('class' => 'form-control', 'placeholder' => '__ ucfirst($field) __','multiple')) !!}
                         {!! ($errors->has('__$field__') ? '<p>'.$errors->first('__$field__').'</p>' : '') !!}
                     </div>
                      __!endif__

@@ -41,7 +41,7 @@
                                                 </td>
                                             __!endif__
                                         __!else: __
-                                            __!if(!$field->has('translation')):__
+                                            __!if($field->has('translation')):__
                                                  <td>{{$__$item__->translate($lang)->__$field__}}</td>
                                             __!else: __
                                                 <td>{{$__$item__->__$field__}}</td>

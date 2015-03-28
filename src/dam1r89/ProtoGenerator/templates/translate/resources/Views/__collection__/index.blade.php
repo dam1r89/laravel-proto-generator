@@ -41,7 +41,11 @@
                                                 </td>
                                             __!endif__
                                         __!else: __
-                                             <td>{{$__$item__->translate($lang)->__$field__}}</td>
+                                            __!if(!$field->has('translation')):__
+                                                 <td>{{$__$item__->translate($lang)->__$field__}}</td>
+                                            __!else: __
+                                                <td>{{$__$item__->__$field__}}</td>
+                                            __!endif;__
                                         __!endif;__
                                 __!endforeach;__
                                   <td>{!! link_to_route('__$collection__.edit', 'Edit', array($__$item__->id), array('class' => 'btn btn-info','style'=>'color:white')) !!}</td>

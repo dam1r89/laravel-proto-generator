@@ -4,15 +4,11 @@ composer.json
         "dam1r89/proto-generator": "2.0.*"
     },
 
-add to `app/config/app.php`
+add to `config/app.php` under providers
 
-        'dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider',
-        'Illuminate\Html\HtmlServiceProvider',
-
+        dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider::class,
 
 
-        'Form' => 'Illuminate\Html\FormFacade',
-        'HTML' => 'Illuminate\Html\HtmlFacade',
 
 ##Example
 

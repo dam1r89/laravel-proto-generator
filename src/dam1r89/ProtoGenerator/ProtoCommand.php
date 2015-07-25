@@ -3,9 +3,8 @@
 namespace dam1r89\ProtoGenerator;
 
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Composer;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class ProtoCommand extends Command
 {
@@ -22,7 +21,9 @@ class ProtoCommand extends Command
     {
         $contextData = $this->getContextData();
 
-        $source = __DIR__ . '/templates/' . $this->option('template');
+        $source = $this->getSource();
+
+
         $dest = base_path($this->option('output'));
 
         $this->info("Creating on path $dest from source $source");
@@ -38,27 +39,24 @@ class ProtoCommand extends Command
 
         $existing = [];
         foreach ($proto->getFiles() as $file) {
-           if (file_exists($file->dest)){
-               $existing[] = substr($file->dest, strlen(base_path()) + 1);
-           }
+            if (file_exists($file->dest)) {
+                $existing[] = substr($file->dest, strlen(base_path()) + 1);
+            }
         }
 
-        if (count($existing) === 0){
+        if (count($existing) === 0) {
             $proto->generate();
             $this->info('Success');
-        }
-        else{
+        } else {
             $this->error('Files exists');
             $this->info(implode("\n", $existing));
-            if ($this->confirm("Do you want to overwrite these files?")){
+            if ($this->confirm("Do you want to overwrite these files?")) {
                 $proto->generate(true);
             };
         }
 
 
-
     }
-
 
 
     protected function getArguments()
@@ -77,6 +75,20 @@ class ProtoCommand extends Command
             array('output', 'o', InputOption::VALUE_OPTIONAL, 'Output folder where file/folder structure will be generated, default is app', ''),
             array('override', 'r', InputOption::VALUE_NONE, 'Automatically override all')
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function getSource()
+    {
+        $appScaffold = base_path($this->option('template'));
+        if (file_exists($appScaffold)) {
+            return $appScaffold;
+        }
+
+        $source = __DIR__ . '/templates/' . $this->option('template');
+        return $source;
     }
 
 }

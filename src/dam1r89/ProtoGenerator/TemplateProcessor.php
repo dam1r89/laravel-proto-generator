@@ -25,8 +25,8 @@ class TemplateProcessor{
 
         $data = $this->escape($data, ['<?php', '?>']);
 
-        $data = preg_replace('/__!\s*((.|\n|\r)*?)\s*__\h*\n?\h*/', '<?php $1; ?>', $data);
-        $data = preg_replace('/__\s*((.|\n|\r)*?)\s*__\h*\n?\h*/', '<?php echo $1; ?>', $data);
+        $data = preg_replace('/__!\s*((.|\n|\r)*?)\s*__/', '<?php $1; ?>' , $data);
+        $data = preg_replace('/__\s*((.|\n|\r)*?)\s*__/', '<?php echo $1; ?>', $data);
 
 
         foreach ($this->context as $key => $value) {

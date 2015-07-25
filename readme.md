@@ -7,9 +7,6 @@ composer.json
 add to `config/app.php` under providers
 
     dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider::class,
-
-and html providers
-
     Illuminate\Html\HtmlServiceProvider::class
 
 And to aliases:

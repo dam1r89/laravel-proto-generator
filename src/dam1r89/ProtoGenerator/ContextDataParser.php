@@ -9,7 +9,8 @@
 namespace dam1r89\ProtoGenerator;
 
 
-class Field{
+class Field
+{
     private $name;
     private $properies;
 
@@ -24,8 +25,9 @@ class Field{
         return $this->name;
     }
 
-    public function get($prop, $default = null){
-        if ($this->has($prop)){
+    public function get($prop, $default = null)
+    {
+        if ($this->has($prop)) {
             return $this->properies[$prop];
         }
         return $default;
@@ -33,7 +35,7 @@ class Field{
 
     public function has($prop)
     {
-       return isset($this->properies[$prop]);
+        return isset($this->properies[$prop]);
     }
 
     function __toString()
@@ -44,18 +46,31 @@ class Field{
 
 }
 
-class ContextDataParser implements ContextDataParserInterface{
+class ContextDataParser implements ContextDataParserInterface
+{
 
 
     private $item, $fields;
 
-    function __construct($item, array $fields = [])
+
+    /**
+     * @param $item
+     * @param array $fields
+     * @return ContextDataParser
+     */
+    public static function create($item, array $fields)
+    {
+        return new static($item, $fields);
+    }
+
+    private function __construct($item, array $fields = [])
     {
         $this->item = $item;
         $this->fields = $fields;
     }
 
-    public function getContextData(){
+    public function getContextData()
+    {
 
         $table = str_plural(strtolower($this->item));
         $singleItem = str_singular($table);

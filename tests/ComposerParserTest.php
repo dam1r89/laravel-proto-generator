@@ -17,13 +17,13 @@ class ComposerParserTest extends PHPUnit_Framework_TestCase
      */
     public function testPullingNamespace()
     {
-        $cp = new ComposerParser(__DIR__ . '/composer.json');
+        $cp = ComposerParser::create(__DIR__ . '/composer.json');
         $this->assertEquals('App\\', $cp->getNamespace());
     }
 
     public function testBadComposer()
     {
-        $cp = new ComposerParser(__DIR__ . '/bad_composer.json');
+        $cp = ComposerParser::create(__DIR__ . '/bad_composer.json');
         $this->assertEquals('def', $cp->getNamespace('def'));
     }
 }

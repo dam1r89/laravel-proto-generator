@@ -15,12 +15,12 @@
                          __!else: __
                             <th>__ ucfirst($field) __</th>
                          __!endif;__
-                       
+
                     __!endforeach;__
                 </tr>
             </thead>
             <tbody>
-                @foreach($__$collection.' '__ as $__$item__)
+                @foreach($__$collection__ as $__$item__)
                 <tr>
                     __!foreach($fields as $field):__
                             __!if($field->has('relation')) : __
@@ -31,7 +31,7 @@
                                     @foreach($__$item__->__$field__()->get() as $__str_singular($field->get("relation")["name"])__)
                                         {!!$__str_singular($field->get("relation")["name"])__->__$field->get("relation")["field"]__ !!}
                                     @endforeach
-                                        
+
                                     </td>
                                 __!endif__
                             __!else: __
@@ -50,6 +50,6 @@
             </tbody>
         </table>
     @else
-        <p>You do not have  __ ucfirst($singleItem).' '__   in database</p>
+        <p>You do not have  __$collection__   in database</p>
     @endif
 @stop

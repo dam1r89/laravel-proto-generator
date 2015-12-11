@@ -32,9 +32,9 @@ class TemplateProcessor{
         foreach ($this->context as $key => $value) {
             $$key = $value;
         }
-        file_put_contents(storage_path('__template.tmp'), $data);
+        file_put_contents(storage_path('app/template.tmp'), $data);
         ob_start();
-        require storage_path('__template.tmp');
+        require storage_path('app/template.tmp');
         $data = ob_get_clean();
 
         return $this->unEscape($data, ['<?php', '?>']);

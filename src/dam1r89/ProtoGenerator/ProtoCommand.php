@@ -12,28 +12,16 @@ class ProtoCommand extends Command
     protected $name = 'proto';
     protected $description = 'Create model, views, controller, migration for a defined model. Example usage php `artisan proto user`';
 
-    private function getContextData()
-    {
-        return json_decode($this->option('data'), true);
-    }
 
     public function fire()
     {
-        $contextData = $this->getContextData();
-
         $source = $this->getSource();
-
 
         $dest = base_path($this->option('output'));
 
         $this->info("Creating on path $dest from source $source");
 
-
-        $parser = new ContextDataParser($this->argument('model'), json_decode($this->option('fields'), true));
-
-        $additional['namespace'] = with(new ComposerParser(base_path('composer.json')))->getNamespace('App\\');
-
-        $context = array_merge($parser->getContextData(), $additional, $contextData);
+        $context = $this->getContextData();
 
         $proto = Proto::create($source, $dest, $context);
 
@@ -77,18 +65,31 @@ class ProtoCommand extends Command
         );
     }
 
-    /**
-     * @return string
-     */
     private function getSource()
     {
-        $appScaffold = base_path($this->option('template'));
+        $appScaffold = base_path('resources/templates/' . $this->option('template'));
         if (file_exists($appScaffold)) {
             return $appScaffold;
         }
 
         $source = __DIR__ . '/templates/' . $this->option('template');
         return $source;
+    }
+
+    private function getContextData()
+    {
+        $main = ContextDataParser::create(
+            $this->argument('model'),
+            json_decode($this->option('fields'), true)
+        )->getContextData();
+
+        $additional = [
+            'namespace' => ComposerParser::create(base_path('composer.json'))->getNamespace('App\\')
+        ];
+
+        $extra = json_decode($this->option('data'), true);
+
+        return array_merge($main, $additional, $extra);
     }
 
 }

@@ -1,13 +1,15 @@
-composer.json
+Install
 
-    "require-dev": {
-        "dam1r89/proto-generator": "2.0.*"
-    },
+    composer require "dam1r89/proto-generator" --dev 
 
 add to `config/app.php` under providers
 
     dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider::class,
     Illuminate\Html\HtmlServiceProvider::class
+
+Type
+    
+    php artisan vendor:publish
 
 And to aliases:
 

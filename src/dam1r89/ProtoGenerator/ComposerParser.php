@@ -9,25 +9,36 @@
 namespace dam1r89\ProtoGenerator;
 
 
-class ComposerParser {
+class ComposerParser
+{
 
     private $composer;
 
     const APP_FOLDER = 'app/';
 
-    function __construct($filename)
+    /**
+     * @param $filename
+     * @return ComposerParser
+     */
+    public static function create($filename)
+    {
+        return new static($filename);
+    }
+
+    private function __construct($filename)
     {
         $this->composer = json_decode(file_get_contents($filename), true);
 
     }
 
-    public function getNamespace($default = null){
-        if (!isset($this->composer['autoload']) || !isset($this->composer['autoload']['psr-4'])){
+    public function getNamespace($default = null)
+    {
+        if (!isset($this->composer['autoload']) || !isset($this->composer['autoload']['psr-4'])) {
             return $default;
         }
         $psr4 = $this->composer['autoload']['psr-4'];
-        foreach($psr4 as $namespace => $folder){
-            if ($folder === self::APP_FOLDER){
+        foreach ($psr4 as $namespace => $folder) {
+            if ($folder === self::APP_FOLDER) {
                 return $namespace;
             }
         }

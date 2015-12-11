@@ -8,12 +8,12 @@ use dam1r89\ProtoGenerator\ContextDataParser;
  * Date: 9/2/14
  * Time: 11:32 AM
  */
-
-class ContextDataParserTest extends PHPUnit_Framework_TestCase{
+class ContextDataParserTest extends PHPUnit_Framework_TestCase
+{
 
     public function testParsingOneWordItem()
     {
-        $parser = new ContextDataParser('car', []);
+        $parser = ContextDataParser::create('car', []);
 
         $data = $parser->getContextData();
         /**
@@ -40,7 +40,7 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
     public function testParsingTwoWordItem()
     {
         $itemNames = array('video_tags', 'video_tag');
-        foreach($itemNames as $itemName){
+        foreach ($itemNames as $itemName) {
             $this->parseItem($itemName);
 
         }
@@ -53,7 +53,7 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase{
      */
     private function parseItem($itemName)
     {
-        $parser = new ContextDataParser($itemName, []);
+        $parser = ContextDataParser::create($itemName, []);
 
         $data = $parser->getContextData();
 

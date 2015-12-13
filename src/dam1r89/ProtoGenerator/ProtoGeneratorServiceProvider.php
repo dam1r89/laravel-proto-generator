@@ -2,6 +2,8 @@
 
 use Illuminate\Support\ServiceProvider;
 
+
+
 class ProtoGeneratorServiceProvider extends ServiceProvider
 {
 
@@ -30,6 +32,7 @@ class ProtoGeneratorServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        require_once __DIR__ . '/helpers.php';
         $this->publishes([
             __DIR__ . '/templates/standard' => base_path('resources/templates/standard'),
         ]);

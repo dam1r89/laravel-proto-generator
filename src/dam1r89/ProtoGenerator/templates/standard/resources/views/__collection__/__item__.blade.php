@@ -14,10 +14,13 @@
     {!!Form::model($__$item__,[ 'route' => '__$collection__.store' ] )!!}
     @endif
         __!foreach($fields as $field):__
-
         <div class="form-group {{ ($errors->has('__$field__')) ? 'has-error' : '' }}">
             {!! Form::label('__$field__','__ ucfirst($field) __:') !!}
+            __! if (is_relation($field)): __
+            {!! Form::select('__$field__', App\Models\__ relation_model($field) __::lists('__$field->get('label')__', 'id'), null, array('class' => 'form-control', 'placeholder' => '__ ucfirst($field) __')) !!}
+            __! else: __
             {!! Form::text('__$field__', null, ['class' => 'form-control', 'placeholder' => '__ ucfirst($field) __']) !!}
+            __! endif; __
             {!! ($errors->has('__$field__') ? '<p>'.$errors->first('__$field__').'</p>' : '') !!}
         </div>
 

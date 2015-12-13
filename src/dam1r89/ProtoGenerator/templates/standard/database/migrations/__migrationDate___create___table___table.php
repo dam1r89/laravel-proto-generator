@@ -11,7 +11,11 @@ class Create__$controller__Table extends Migration {
         Schema::create('__$table__', function(Blueprint $table){
             $table->increments('id');
             __!foreach($fields as $field):__
-                 __!if($field->get("relation")["type"] != 'belongsToMany') : __
+
+                 __!if (is_relation($field)): __
+                    $table->integer('__$field__')->unsigned();
+                    $table->foreign('__$field__')->references('id')->on('__ relation_table($field) __');
+                 __!else:__
                     $table->string('__$field__');
                  __!endif;__
 
@@ -19,21 +23,6 @@ class Create__$controller__Table extends Migration {
             $table->timestamps();
         });
 
-         __!foreach($fields as $field):__
-            __!if($field->has('relation')) : __
-                __!if($field->get("relation")["type"] == 'belongsToMany'):__
-
-                        Schema::create('__$item."_".$field__', function($table){
-                            $table->increments('id');
-                            $table->integer('__$item."_id"__')->unsigned();
-                            $table->integer('__str_singular($field->get("relation")["name"])."_id"__')->unsigned();
-
-                            $table->timestamps();
-                        });
-
-                __!endif;__
-            __!endif;__
-        __!endforeach;__
     }
 
     public function down()
@@ -41,15 +30,6 @@ class Create__$controller__Table extends Migration {
 
         Schema::dropIfExists('__$table__');
 
-        __!foreach($fields as $field):__
-            __!if($field->has('relation')) : __
-                __!if($field->get("relation")["type"] == 'belongsToMany'):__
-
-                         Schema::dropIfExists('__$item."_".$field__');
-
-                __!endif;__
-            __!endif;__
-        __!endforeach;__
 
 
     }

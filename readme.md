@@ -31,6 +31,8 @@ and add bindings to the `routes.php` file:
 
 then go to local serving addres, for example on **http://localhost:8000/posts** and you can see simple crud application.
 
+For hasOne relation use field name and id: `"category_id": {"label": "name"}`.
+
 ##Flags
 
 *-r* replace files withouth asking  

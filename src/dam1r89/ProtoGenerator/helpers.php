@@ -27,5 +27,8 @@ function relations($fields)
         }
     }
     return $relations;
+}
 
+function str_label($field){
+    return ucfirst(str_replace('_', ' ', snake_case($field)));
 }

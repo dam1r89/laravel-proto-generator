@@ -1,16 +1,17 @@
 @extends('proto.master')
 
 @section('content')
-    <h1>All __ ucfirst($collection)__ </h1>
+    <h1>All __ str_label($table)__ </h1>
         <p>
-            {!! link_to_route('__$collection__.create', 'Create new __$collection__' , [] , ['class' => 'btn btn-info']) !!}
+            <a href="{{ route('__$itemLower__.create') }}" class="btn btn-info">
+            Create __str_label($singleItem)__</a>
         </p>
     @if(count($__$collection__))
-        <table class="table  table-hover">
+        <table class="table table-condensed table-hover">
             <thead>
                 <tr>
                     __!foreach($fields as $field):__
-                    <th>__ ucfirst($field) __</th>
+                    <th> __str_label($field)__</th>
                     __!endforeach;__
                     <th>Edit</th>
                     <th>Delete</th>
@@ -25,12 +26,19 @@
 
                     __!endforeach;__
 
-                    <td>{!! link_to_route('__$collection__.edit', 'Edit', [$__$item__->id], ['class' => 'btn btn-info']) !!}</td>
+                    <td>
+                        <a href="{{ route('__$itemLower__.edit', $__$item__->id) }}" class="btn btn-xs btn-info">
+                            Edit
+                        </a>
 
                     <td>
-                        {!! Form::open(['method' => 'DELETE', 'route' => ['__$collection__.destroy', $__$item__->id]]) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                        {!! Form::close() !!}
+                        <form action="{{ route('__$itemLower__.destroy', $__$item__->id) }}" method="post">
+                            {!! csrf_field() !!}
+                            {!! method_field('delete') !!}
+                            <button type="submit" class="btn btn-xs btn-danger">
+                                Delete 
+                            </button> 
+                        </form>
                     </td>
 
                 </tr>
@@ -38,6 +46,6 @@
             </tbody>
         </table>
     @else
-        <p>You do not have  __$collection__  in database</p>
+        <p>You do not have  __str_replace('_', ' ',$table)__ in database</p>
     @endif
 @stop

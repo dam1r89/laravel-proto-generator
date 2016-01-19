@@ -14,8 +14,7 @@
         <div class="container">
         	<div class="row">
         		<div class="col-md-12">
-
-                    @include('proto.notifications')
+                    @include('components.notifications')
         		    @yield('content')
         		</div>
         	</div>

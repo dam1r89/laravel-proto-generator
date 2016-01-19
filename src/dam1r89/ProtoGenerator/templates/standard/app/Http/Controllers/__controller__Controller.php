@@ -23,9 +23,9 @@ class __$controller__Controller extends Controller {
 
     public function store(__$model__ $__$item__, __$model__FormRequest $request )
     {
-        $__$item__ = $__$item__->create($request->all());
+        $__$item__ = $__$item__->create($request->input());
 
-        return redirect()->route('__$collection__.index')->with('success','You have successfully added  __$model__');
+        return redirect()->route('__$itemLower__.index')->with('success','You have successfully added  __$model__');
     }
 
     public function edit(__$model__ $__$item__)
@@ -35,15 +35,15 @@ class __$controller__Controller extends Controller {
 
     public function update(__$model__FormRequest $request, __$model__ $__$item__)
     {
-        $__$item__->update($request->all());
-        return redirect()->route('__$collection__.index')->with('success','You have successfully edited __$model__');
+        $__$item__->update($request->input());
+        return redirect()->route('__$itemLower__.index')->with('success','You have successfully edited __$model__');
 
     }
 
     public function destroy(__$model__ $__$item__)
     {
         $__$item__->delete();
-        return redirect()->route('__$collection__.index')->with('success','You have successfully deleted __$model__');
+        return redirect()->route('__$itemLower__.index')->with('success','You have successfully deleted __$model__');
     }
 
 

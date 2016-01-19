@@ -11,11 +11,6 @@ Type
     
     php artisan vendor:publish
 
-And to aliases:
-
-    'Form' => Illuminate\Html\FormFacade::class,
-    'HTML' => Illuminate\Html\HtmlFacade::class,
-
 ##Example
 
 To scafold resource with name *post* you type:

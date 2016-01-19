@@ -38,7 +38,7 @@ class ProtoCommand extends Command
         } else {
             $this->error('Files exists');
             $this->info(implode("\n", $existing));
-            if ($this->confirm("Do you want to overwrite these files?")) {
+            if ($this->option('override') || $this->confirm("Do you want to overwrite these files?")) {
                 $proto->generate(true);
             };
         }

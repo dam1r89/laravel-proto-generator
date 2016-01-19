@@ -4,32 +4,32 @@
 
     <h1>Edit __ ucfirst($singleItem)__</h1>
         <p>
-            {!! link_to_route('__$collection__.index', 'All __$collection__' , [] , ['class' => 'btn btn-info']) !!}
+            <a href="{{ route('__$itemLower__.index') }}" class="btn btn-info">
+                All __str_label($table)__ 
+            </a>
         </p>
 
-
     @if($__$item__->id)
-    {!!Form::model($__$item__,[ 'route' => ['__$collection__.update' ,$__$item__->id ] ,'method' => 'PATCH' ]  )!!}
+        <form action="{{ route('__$itemLower__.update', $__$item__->id) }}" method="post">
+            {!! method_field('patch') !!}
     @else
-    {!!Form::model($__$item__,[ 'route' => '__$collection__.store' ] )!!}
+        <form action="{{ route('__$itemLower__.store') }}" method="post">
     @endif
+        {!! csrf_field() !!}
         __!foreach($fields as $field):__
-        <div class="form-group {{ ($errors->has('__$field__')) ? 'has-error' : '' }}">
-            {!! Form::label('__$field__','__ ucfirst($field) __:') !!}
             __! if (is_relation($field)): __
-            {!! Form::select('__$field__', App\Models\__ relation_model($field) __::lists('__$field->get('label')__', 'id'), null, array('class' => 'form-control', 'placeholder' => '__ ucfirst($field) __')) !!}
+ @include('components.select', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__', 'foreinLabel' => '__$field->get('label','id')__'])
+
             __! else: __
-            {!! Form::text('__$field__', null, ['class' => 'form-control', 'placeholder' => '__ ucfirst($field) __']) !!}
+ @include('components.__$field->get('type','input')__', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__'])
             __! endif; __
-            {!! ($errors->has('__$field__') ? '<p>'.$errors->first('__$field__').'</p>' : '') !!}
-        </div>
 
         __!endforeach;__
 
         <div class="form-group">
-            {!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
+            <button type="submit" class="btn btn-primary">Save</button>
         </div>
 
-    {!!Form::close()!!}
+    </form>
 
 @stop

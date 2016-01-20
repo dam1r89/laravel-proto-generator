@@ -8,7 +8,6 @@
                 All __str_label($table)__ 
             </a>
         </p>
-
     @if($__$item__->id)
         <form action="{{ route('__$itemLower__.update', $__$item__->id) }}" method="post">
             {!! method_field('patch') !!}
@@ -18,7 +17,8 @@
         {!! csrf_field() !!}
         __!foreach($fields as $field):__
             __! if (is_relation($field)): __
- @include('components.select', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__', 'foreinLabel' => '__$field->get('label','id')__'])
+ @include('components.select', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__',
+  'items' => App\Models\__relation_model($field)__::lists('__$field->get('label','id')__', 'id'), 'nullable' => true])
 
             __! else: __
  @include('components.__$field->get('type','input')__', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__'])

@@ -29,6 +29,11 @@ function relations($fields)
     return $relations;
 }
 
-function str_label($field){
+function str_label($field, $trimId = true){
+    
+    if ($trimId && substr($field, -3) == '_id')
+    {
+        $field = substr($field, 0, -3);
+    }
     return ucfirst(str_replace('_', ' ', snake_case($field)));
 }

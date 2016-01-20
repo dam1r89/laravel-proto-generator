@@ -1,7 +1,7 @@
 <div class="form-group{{ ($errors->has($name)) ? ' has-error' : '' }}">
 	<label for="{{ $name }}">{{ $label }}</label>
-	<select name="{{ $name }}" id="{{ $name }}" class="form-control">
-		@foreach( $items as $id => $label) 
+	<select multiple="multiple" name="{{ $name }}" id="{{ $name }}" class="form-control">
+		@foreach($items as $id => $label) 
 		@if(isset($nullable))
 		<option value=""></option>
 		@endif

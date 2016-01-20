@@ -21,8 +21,7 @@ fields flag is json data which is transfered to the templates.
 
 and add bindings to the `routes.php` file:
 
-    Route::model('posts', 'App\Models\Post');
-    Route::resource('posts', 'PostsController');
+    Route::resource('post', 'PostsController');
 
 then go to local serving addres, for example on **http://localhost:8000/posts** and you can see simple crud application.
 

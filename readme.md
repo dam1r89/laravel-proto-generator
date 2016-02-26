@@ -5,25 +5,24 @@ Install
 add to `config/app.php` under providers
 
     dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider::class,
-    Illuminate\Html\HtmlServiceProvider::class
 
-Type
+If you want to edit templates you can publish them.
     
     php artisan vendor:publish
 
 ##Example
 
-To scafold resource with name *post* you type:
+To scaffold resource with name *post* you type:
 
     php artisan proto post --fields='{"name":{}, "body":{}}'
 
-fields flag is json data which is transfered to the templates.
+fields flag is json data which is transferred to the templates.
 
 and add bindings to the `routes.php` file:
 
     Route::resource('post', 'PostsController');
 
-then go to local serving addres, for example on **http://localhost:8000/posts** and you can see simple crud application.
+then go to local serving address, for example on **http://localhost:8000/posts** and you can see simple crud application.
 
 For hasOne relation use field name and id: `"category_id": {"label": "name"}`.
 

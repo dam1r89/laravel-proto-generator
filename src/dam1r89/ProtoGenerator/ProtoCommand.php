@@ -78,9 +78,11 @@ class ProtoCommand extends Command
 
     private function getContextData()
     {
+        $fields = json_decode($this->option('fields'), true) ?: [];
+
         $main = ContextDataParser::create(
             $this->argument('model'),
-            json_decode($this->option('fields'), true)
+            $fields
         )->getContextData();
 
         $additional = [

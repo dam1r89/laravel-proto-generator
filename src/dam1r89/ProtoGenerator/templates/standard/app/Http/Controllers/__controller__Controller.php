@@ -12,7 +12,7 @@ class __$controller__Controller extends Controller {
 
     public function index(__$model__ $__$item__)
     {
-        $__$collection__ = $__$item__->all();
+        $__$collection__ = $__$item__->paginate();
         return view('__$collection__.index',compact('__$collection__'));
     }
 

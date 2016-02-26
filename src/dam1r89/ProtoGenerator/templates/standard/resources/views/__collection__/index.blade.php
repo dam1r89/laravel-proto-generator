@@ -45,6 +45,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="text-center">
+            {!!  $__$collection__->render() !!}
+        </div>
     @else
         <p>You do not have  __str_replace('_', ' ',$table)__ in database</p>
     @endif

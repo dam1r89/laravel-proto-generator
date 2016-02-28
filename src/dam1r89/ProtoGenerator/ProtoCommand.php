@@ -34,12 +34,14 @@ class ProtoCommand extends Command
 
         if (count($existing) === 0) {
             $proto->generate();
+            $this->reformat($proto);
             $this->info('Success');
         } else {
             $this->error('Files exists');
             $this->info(implode("\n", $existing));
             if ($this->option('override') || $this->confirm("Do you want to overwrite these files?")) {
                 $proto->generate(true);
+                $this->reformat($proto);
             };
         }
 
@@ -92,6 +94,18 @@ class ProtoCommand extends Command
         $extra = json_decode($this->option('data'), true);
 
         return array_merge($main, $additional, $extra);
+    }
+
+    /**
+     * @param $proto
+     */
+    protected function reformat($proto)
+    {
+        foreach ($proto->getFiles() as $file) {
+            if (file_exists($file->dest)) {
+                exec(sprintf('php %s --psr %s', __DIR__ . '/../../../vendor/bin/fmt.phar', $file->dest));
+            }
+        }
     }
 
 }

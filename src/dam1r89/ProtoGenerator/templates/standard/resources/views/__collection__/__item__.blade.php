@@ -5,7 +5,7 @@
     <h1>Edit __ ucfirst($singleItem)__</h1>
         <p>
             <a href="{{ route('__$itemLower__.index') }}" class="btn btn-info">
-                All __str_label($table)__ 
+                All __str_label($table)__
             </a>
         </p>
     @if($__$item__->id)
@@ -18,7 +18,7 @@
         __!foreach($fields as $field):__
             __! if (is_relation($field)): __
  @include('components.select', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__',
-  'items' => App\Models\__relation_model($field)__::lists('__$field->get('label','id')__', 'id'), 'nullable' => true])
+  'items' => App\Models\__relation_model($field)__::lists('__$field->get('label','id')__', 'id'), 'nullable' => '__$field->get('nullable','')__'])
 
             __! else: __
  @include('components.__$field->get('type','input')__', ['model' => $__$item__,'name' => '__$field__', 'label' => '__str_label($field)__'])

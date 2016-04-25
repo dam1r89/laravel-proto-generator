@@ -5,13 +5,20 @@ namespace dam1r89\ProtoGenerator;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Support\Composer;
 
 class ProtoCommand extends Command
 {
 
     protected $name = 'proto';
     protected $description = 'Create model, views, controller, migration for a defined model. Example usage php `artisan proto user`';
+    protected $composer;
 
+    public function __construct(Composer $composer)
+    {
+        $this->composer = $composer;
+        parent::__construct();
+    }
 
     public function fire()
     {
@@ -44,6 +51,8 @@ class ProtoCommand extends Command
                 $this->reformat($proto);
             };
         }
+
+        $this->composer->dumpAutoloads();
 
 
     }

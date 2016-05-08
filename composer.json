@@ -15,8 +15,8 @@
         "illuminate/html": "~5.0"
     },
     "autoload": {
-        "psr-0": {
-            "dam1r89\\ProtoGenerator": "src/"
+        "psr-4": {
+            "dam1r89\\ProtoGenerator\\": "src/ProtoGenerator/"
         }
     },
     "minimum-stability": "stable"

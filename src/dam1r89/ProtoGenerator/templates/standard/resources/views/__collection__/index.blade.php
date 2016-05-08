@@ -1,7 +1,7 @@
 @extends('proto.master')
 
 @section('content')
-    <h1>All __ str_label($table)__ </h1>
+    <h4>All __ str_label($table)__ </h4>
         <p>
             <a href="{{ route('__$itemLower__.create') }}" class="btn btn-info">
             Create __str_label($singleItem)__</a>

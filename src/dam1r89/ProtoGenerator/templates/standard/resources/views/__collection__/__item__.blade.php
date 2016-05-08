@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Edit __ ucfirst($singleItem)__</h1>
+    <h4>Edit __ ucfirst($singleItem)__</h4>
         <p>
             <a href="{{ route('__$itemLower__.index') }}" class="btn btn-info">
                 All __str_label($table)__

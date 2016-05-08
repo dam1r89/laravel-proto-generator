@@ -2,7 +2,7 @@ Install
 
     composer require "dam1r89/proto-generator" --dev 
 
-add to `config/app.php` under providers
+Add to `config/app.php` under the providers key, but before application providers.
 
     dam1r89\ProtoGenerator\ProtoGeneratorServiceProvider::class,
 
@@ -14,7 +14,7 @@ If you want to edit templates you can publish them.
 
 To scaffold resource with name *post* you type:
 
-    php artisan proto post --fields='{"name":{}, "body":{}}'
+    php artisan proto post --fields='{"name":{}, "body":{}, "rating": {"type": "number"}}'
 
 fields flag is json data which is transferred to the templates.
 

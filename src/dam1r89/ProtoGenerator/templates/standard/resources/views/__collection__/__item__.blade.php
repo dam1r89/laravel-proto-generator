@@ -8,8 +8,8 @@
                 All __str_label($table)__
             </a>
         </p>
-    @if($__$item__->id)
-        <form action="{{ route('__$itemLower__.update', $__$item__->id) }}" method="post">
+    @if($__$item__->exists)
+        <form action="{{ route('__$itemLower__.update', $__$item__) }}" method="post">
             {!! method_field('patch') !!}
     @else
         <form action="{{ route('__$itemLower__.store') }}" method="post">

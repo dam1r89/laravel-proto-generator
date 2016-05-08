@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "dam1r89\\ProtoGenerator\\": "src/ProtoGenerator/"
+            "dam1r89\\ProtoGenerator\\": "src/dam1r89/ProtoGenerator/"
         }
     },
     "minimum-stability": "stable"

@@ -6,8 +6,6 @@ use Illuminate\Support\ServiceProvider;
 class ProtoGeneratorServiceProvider extends ServiceProvider
 {
 
-    protected $defer = true;
-
     public function register()
     {
 

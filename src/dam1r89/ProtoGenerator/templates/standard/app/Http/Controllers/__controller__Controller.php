@@ -18,32 +18,32 @@ class __$controller__Controller extends Controller {
 
     public function create(__$model__ $__$item__)
     {
-        return view('__$collection__.__$item__',compact('__$item__'));
+        return view('__$collection__.form',compact('__$item__'));
     }
 
     public function store(__$model__ $__$item__, __$model__FormRequest $request )
     {
         $__$item__ = $__$item__->create($request->input());
 
-        return redirect()->route('__$itemLower__.index')->with('success','You have successfully created __str_label($model)__');
+        return redirect()->route('__$item__.index')->with('success','You have successfully created __str_label($model)__');
     }
 
     public function edit(__$model__ $__$item__)
     {
-        return view('__$collection__.__$item__',compact('__$item__'));
+        return view('__$collection__.form',compact('__$item__'));
     }
 
     public function update(__$model__FormRequest $request, __$model__ $__$item__)
     {
         $__$item__->update($request->input());
-        return redirect()->route('__$itemLower__.index')->with('success','You have successfully updated __str_label($model)__');
+        return redirect()->route('__$item__.index')->with('success','You have successfully updated __str_label($model)__');
 
     }
 
     public function destroy(__$model__ $__$item__)
     {
         $__$item__->delete();
-        return redirect()->route('__$itemLower__.index')->with('success','You have successfully deleted __str_label($model)__');
+        return redirect()->route('__$item__.index')->with('success','You have successfully deleted __str_label($model)__');
     }
 
 

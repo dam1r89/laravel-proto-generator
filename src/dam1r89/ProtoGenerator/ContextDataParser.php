@@ -82,13 +82,16 @@ class ContextDataParser implements ContextDataParserInterface
         $model = Ucfirst($item);
         $migrationDate = $this->getDatePrefix();
 
+        $snake = snake_case($collection, '-');
+        $singleSnake = str_singular($snake);
+
         $fields = [];
 
         foreach ($this->fields as $name => $field) {
             $fields[] = new Field($name, $field);
         }
 
-        return compact('table', 'item', 'itemLower', 'singleItem', 'model', 'controller', 'collection', 'migrationDate', 'fields');
+        return compact('table', 'item', 'itemLower', 'singleItem', 'model', 'controller', 'collection', 'migrationDate', 'fields', 'snake', 'singleSnake');
     }
 
     protected function getDatePrefix()

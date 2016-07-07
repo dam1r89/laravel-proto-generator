@@ -28,7 +28,7 @@ class Create__$controller__Table extends Migration {
     public function down()
     {
 
-        Schema::dropIfExists('__$table__');
+        Schema::drop('__$table__');
 
 
 

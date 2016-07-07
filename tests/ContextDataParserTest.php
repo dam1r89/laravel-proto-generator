@@ -59,6 +59,8 @@ class ContextDataParserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('video_tags', $data['table']);
         $this->assertEquals('video_tag', $data['singleItem']);
+        $this->assertEquals('video-tags', $data['snake']);
+        $this->assertEquals('video-tag', $data['singleSnake']);
         $this->assertEquals('videoTags', $data['collection']);
         $this->assertEquals('VideoTags', $data['controller']);
         $this->assertEquals('videoTag', $data['item']);

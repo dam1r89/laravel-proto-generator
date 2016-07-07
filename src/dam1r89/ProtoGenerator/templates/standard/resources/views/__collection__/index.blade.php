@@ -3,7 +3,7 @@
 @section('content')
     <h4>All __ str_label($table)__ </h4>
         <p>
-            <a href="{{ route('__$itemLower__.create') }}" class="btn btn-info">
+            <a href="{{ route('__$item__.create') }}" class="btn btn-info">
             Create __str_label($singleItem)__</a>
         </p>
     @if(count($__$collection__))
@@ -27,17 +27,17 @@
                     __!endforeach;__
 
                     <td>
-                        <a href="{{ route('__$itemLower__.edit', $__$item__) }}" class="btn btn-xs btn-info">
+                        <a href="{{ route('__$item__.edit', $__$item__->id) }}" class="btn btn-xs btn-info">
                             Edit
                         </a>
 
                     <td>
-                        <form action="{{ route('__$itemLower__.destroy', $__$item__) }}" method="post">
+                        <form action="{{ route('__$item__.destroy', $__$item__->id) }}" method="post">
                             {!! csrf_field() !!}
                             {!! method_field('delete') !!}
                             <button type="submit" class="btn btn-xs btn-danger">
-                                Delete 
-                            </button> 
+                                Delete
+                            </button>
                         </form>
                     </td>
 

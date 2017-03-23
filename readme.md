@@ -10,7 +10,7 @@ If you want to edit templates you can publish them.
     
     php artisan vendor:publish
 
-##Example
+## Example
 
 To scaffold resource with name *post* you type:
 
@@ -26,7 +26,7 @@ then go to local serving address, for example on **http://localhost:8000/posts**
 
 For hasOne relation use field name and id: `"category_id": {"label": "name"}`.
 
-##Flags
+## Flags
 
 *-r* replace files withouth asking  
 *-t* template folder - default `standard`  
@@ -34,7 +34,7 @@ For hasOne relation use field name and id: `"category_id": {"label": "name"}`.
 *-d* additional context data  
 *-o* output folder - default base  
 
-##Using from app
+## Using from app
 
     use dam1r89\ProtoGenerator\ContextDataParser;
     use dam1r89\ProtoGenerator\Proto;

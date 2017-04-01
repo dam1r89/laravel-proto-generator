@@ -8,7 +8,7 @@ Add to `config/app.php` under the providers key, but before application provider
 
 If you want to edit templates you can publish them.
     
-    php artisan vendor:publish
+    php artisan vendor:publish --tag="proto-generator"
 
 ## Example
 

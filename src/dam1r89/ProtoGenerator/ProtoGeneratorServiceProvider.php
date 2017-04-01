@@ -23,7 +23,7 @@ class ProtoGeneratorServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/templates/standard' => base_path('resources/templates/standard'),
-        ]);
+        ], 'proto-generator');
     }
 
 }

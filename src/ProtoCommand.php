@@ -3,9 +3,10 @@
 namespace dam1r89\ProtoGenerator;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Composer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Illuminate\Support\Composer;
+use dam1r89\ProtoGenerator\Formatter\Formatter;
 
 class ProtoCommand extends Command
 {
@@ -111,9 +112,7 @@ class ProtoCommand extends Command
     protected function reformat($proto)
     {
         foreach ($proto->getFiles() as $file) {
-            if (file_exists($file->dest)) {
-                exec(sprintf('php %s --psr %s', __DIR__ . '/../../../vendor/bin/fmt.phar', $file->dest));
-            }
+            Formatter::format($file->dest);
         }
     }
 

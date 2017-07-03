@@ -6,13 +6,23 @@ class Formatter
 {
     public static function format($file)
     {
-
-        if (file_exists($file)) {
-            exec(sprintf(' php %s fix %s  --config=%s --allow-risky=yes',
-                __DIR__ . '/../../vendor/bin/php-cs-fixer',
-                $file,
-                __DIR__ . '/.php_cs.dist'
-            ));
+        if (preg_match('/.blade.php$/', $file)) {
+            $fmt = new BladeFormatter();
+            $output = $fmt->format(file_get_contents($file));
+            file_put_contents($file, $output);
+        } else {
+            $fmt = new PhpFormatter();
+            $fmt->format($file);
         }
+    }
+
+    public function formatPhp()
+    {
+        // body
+    }
+
+    public function formatBlade()
+    {
+        // body
     }
 }

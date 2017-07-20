@@ -10,7 +10,7 @@
         "email": "ivanmijatovic89@gmail.com"
     }],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.6.0",
         "illuminate/support": "~5.4",
         "friendsofphp/php-cs-fixer": "^2.3",
         "mihaeu/html-formatter": "^1.0"
@@ -20,5 +20,7 @@
             "dam1r89\\ProtoGenerator\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    }
 }

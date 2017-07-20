@@ -30,9 +30,16 @@ class PhpFormatter
         $config = Config::create()
             ->setRules([
                 '@Symfony' => true,
+                '@PSR2' => true,
+                'binary_operator_spaces' => ['align_double_arrow' => true, ],
                 'array_syntax' => ['syntax' => 'short'],
+                'ordered_imports' => ['sortAlgorithm' => 'length'],
+                'trailing_comma_in_multiline_array' => false
+                // 'Proto/array_indentation' => true
             ])
             ->setFinder($finder);
+
+        // $config->registerCustomFixers([new ArrayIndentationFixer()]);
 
         $errorManager = new ErrorsManager();
 
@@ -68,9 +75,33 @@ class PhpFormatter
 
         $changed = $runner->fix();
 
+
         $invalidErrors = $errorManager->getInvalidErrors();
         $exceptionErrors = $errorManager->getExceptionErrors();
         $lintErrors = $errorManager->getLintErrors();
+        // dd($invalidErrors, $exceptionErrors, $lintErrors);
 
+    }
+
+    public function formatFragment($fragment)
+    {
+
+        $content = "<?php ___format___(\n".$fragment."\n);";
+
+        $tmpFile = __DIR__.'/tmp.php';
+        file_put_contents($tmpFile, $content);
+
+        $fmt = new PhpFormatter();
+        $fmt->format($tmpFile);
+
+        $formatted = file_get_contents($tmpFile);
+        $output = null;
+        if (preg_match('/^<\?php\s+___format___\(((?:.|\s)*)\);$/', $formatted, $matches)){
+            $output = trim($matches[1]);
+        }
+        
+        // unlink($tmpFile);
+
+        return $output;
     }
 }

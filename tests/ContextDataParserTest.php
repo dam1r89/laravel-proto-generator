@@ -8,7 +8,9 @@ use dam1r89\ProtoGenerator\ContextDataParser;
  * Date: 9/2/14
  * Time: 11:32 AM
  */
-class ContextDataParserTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ContextDataParserTest extends TestCase
 {
 
     public function testParsingOneWordItem()

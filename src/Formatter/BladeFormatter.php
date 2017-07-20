@@ -15,7 +15,10 @@ class BladeFormatter
 
     public function format($input)
     {
-        // STEP 1.
+
+        $php = new PhpFormatter();
+
+        // STEP 1. Nested conditions in php
         if (preg_match_all('/\(((?>[^()]+)|(?R))*\)/', $input, $matches)) {
             $this->tempReplacementNestedConditions = $matches[0];
             foreach ($matches[0] as $i => $match) {
@@ -44,6 +47,9 @@ class BladeFormatter
             $closing[] = 'end' . $directive;
         }
 
+        // TODO: Handle selfclosing tags
+
+
         if (preg_match_all('/@(' . implode('|', $closing) . ')/', $input, $matches)) {
             $this->closing = $matches[0];
             foreach ($matches[0] as $i => $match) {
@@ -54,7 +60,15 @@ class BladeFormatter
             }
         }
 
-        // STEP 3.5
+        /*
+         * STEP 3.5
+         * @if ... 
+         *     Html
+         * @elseif        <- handle this
+         *     Html
+         * @endif
+         *  
+         */
         $singleItems = ['else', 'elseif'];
 
         if (preg_match_all('/@(' . implode('|', $singleItems) . ')/', $input, $matches)) {
@@ -66,7 +80,7 @@ class BladeFormatter
             }
         }
 
-        // STEP 5
+        // STEP 5 - Format as a normal html
         $output = \Mihaeu\HtmlFormatter::format($input);
 
         // $output = $indenter->indent($input);
@@ -99,6 +113,12 @@ class BladeFormatter
 
         // revers STEP 1.
         foreach ($this->tempReplacementNestedConditions as $i => $original) {
+            // strip parentheses 
+            $original = substr($original, 1, strlen($original) - 2);
+            $original = $php->formatFragment($original);
+            // and put them back
+            $original = "($original)";
+
             $output = str_replace($this->tempReplacementNestedConditionsRepl[$i], $original, $output);
         }
 

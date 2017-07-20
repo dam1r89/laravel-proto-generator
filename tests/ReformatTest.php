@@ -2,6 +2,7 @@
 
 use dam1r89\ProtoGenerator\Formatter\BladeFormatter;
 use dam1r89\ProtoGenerator\Formatter\Formatter;
+use dam1r89\ProtoGenerator\Formatter\PhpFormatter;
 
 
 /**
@@ -10,7 +11,11 @@ use dam1r89\ProtoGenerator\Formatter\Formatter;
  * Date: 9/2/14
  * Time: 11:32 AM
  */
-class ReformatTest extends PHPUnit_Framework_TestCase
+
+use PHPUnit\Framework\TestCase;
+
+
+class ReformatTest extends TestCase
 {
     public function testFormattingFile()
     {
@@ -20,10 +25,32 @@ class ReformatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(file_get_contents($testFile), file_get_contents(__DIR__ . '/formatting/ResultClass.php'));
     }
 
+    public function testFormattingPhpFragment()
+    {
+        $fragment = "['name' => 'Knelac', [\"thing\" =>'something','bla' => 'required'] ]";
+
+        $output = Formatter::formatFragment($fragment);
+
+         $this->assertEquals("['name' => 'Knelac', ['thing' =>'something', 'bla' => 'required']]", $output);
+
+
+    }
+
+    public function testFormattingPhpFragmentArguments()
+    {
+        $fragment = "'layout', [\"somethign\" => 32]";
+
+        $output = Formatter::formatFragment($fragment);
+
+         $this->assertEquals("'layout', ['somethign' => 32]", $output);
+
+
+    }
+
     public function testFormattingBlade()
     {
-        $source = __DIR__ . '/formatting/template-orig.blade.php';
-        $result = __DIR__ . '/formatting/template-result.blade.php';
+        $source = __DIR__ . '/formatting/template-input.blade.php';
+        $result = __DIR__ . '/formatting/template-output.blade.php';
 
         $input = file_get_contents($source);
 
@@ -31,12 +58,5 @@ class ReformatTest extends PHPUnit_Framework_TestCase
         $output = $fmt->format($input);
 
         $this->assertEquals(file_get_contents($result), $output);
-
-        $this->assertEquals(
-            preg_replace('/\s*/', '', $input),
-            preg_replace('/\s*/', '', $output),
-            'Results should have same content'
-        );
-
     }
 }

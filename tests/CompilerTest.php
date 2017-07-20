@@ -9,7 +9,9 @@ use dam1r89\ProtoGenerator\UnderscoreCompiler;
  * Time: 11:32 AM
  */
 
-class CompilerTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class CompilerTest extends TestCase
 {
     /**
      * A basic functional test example.

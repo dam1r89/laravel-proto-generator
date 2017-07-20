@@ -1,5 +1,5 @@
 @extends('metronic::layout',[
-    'title' => 'All Groups',
+    'title'=>"All Groups",
     'create'  => route('group.create')
 ])
 

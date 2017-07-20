@@ -16,13 +16,10 @@ class Formatter
         }
     }
 
-    public function formatPhp()
+    public static function formatFragment($fragment)
     {
-        // body
+        $fmt = new PhpFormatter();
+        return $fmt->formatFragment($fragment);
     }
 
-    public function formatBlade()
-    {
-        // body
-    }
 }

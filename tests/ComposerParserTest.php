@@ -8,7 +8,9 @@ use dam1r89\ProtoGenerator\ComposerParser;
  * Date: 9/2/14
  * Time: 11:32 AM
  */
-class ComposerParserTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class ComposerParserTest extends TestCase
 {
     /**
      * A basic functional test example.

@@ -1,22 +1,22 @@
-@extends('metronic::layout',[
-    'title' => 'All Groups',
+@extends('metronic::layout', [
+    'title'   => 'All Groups',
     'create'  => route('group.create')
 ])
 @section('content')
      
     @component('metronic::components.search-filters')
          damir@gmail.com 
-        @component('metronic::components.form.text',['name'=>'name', 'label'=>'Name','inputOnly'=>true, 'value'=> request('name'), 'class'    =>'input-small'])
+        @component('metronic::components.form.text', ['name'=>'name', 'label'=>'Name', 'inputOnly'=>true, 'value'=> request('name'), 'class'    =>'input-small'])
              
         @endcomponent
          
-        @component('metronic::components.form.text',['name'=>'permissions', 'label'=>'Permissions','inputOnly'=>true, 'value'=> request('permissions'), 'class'    =>'input-small'])
+        @component('metronic::components.form.text', ['name'=>'permissions', 'label'=>'Permissions', 'inputOnly'=>true, 'value'=> request('permissions'), 'class'    =>'input-small'])
              
         @endcomponent
          
     @endcomponent
      
-    @component('metronic::components.block',[
+    @component('metronic::components.block', [
         'title' => 'All Groups '
     ])
          
@@ -62,14 +62,14 @@
                          
                         <td>
                              
-                            @component('metronic::components.button-delete',[
-                            "route" => route('group.destroy', $group->id)
+                            @component('metronic::components.button-delete', [
+                            'route' => route('group.destroy', $group->id)
                         ])
                                  
                             @endcomponent
                              
-                            @component('metronic::components.button-edit',[
-                            "route" => route('group.edit', $group->id)
+                            @component('metronic::components.button-edit', [
+                            'route' => route('group.edit', $group->id)
                         ])
                                  
                             @endcomponent
